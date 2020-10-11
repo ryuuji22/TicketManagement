@@ -60,6 +60,9 @@
             <p:column headerText="Fecha Creación" styleClass="centeredColumnContent">
                 <h:outputText value="#{item.creado}"/>
             </p:column>
+            <p:column headerText="Completado" styleClass="centeredColumnContent">
+                <h:outputText value="#{item.completado}"/>
+            </p:column>
 
             <f:facet name="footer">
                 <p:commandButton id="createButton" styleClass="botonNuevo" value="Nuevo Ticket" actionListener="#{ticketsBean.prepareCreate}" update=":TicketsCreateForm :growl" oncomplete="PF('TicketsCreateDialog').show()" disabled="#{!ticketsBean.usuarioLogin.usuario}" />
