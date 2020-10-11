@@ -27,7 +27,7 @@
             </p:column>
 
             <p:column headerText="Asunto" styleClass="centeredColumnContent">
-                <strong><h:outputText value="#{item.asunto}"/></strong>
+                <h:outputText value="#{item.asunto}"/>
             </p:column>
 
             <p:column filterBy="#{item.prioridad.nombre}" headerText="Prioridad" style="color: #{item.prioridad.color}" styleClass="centeredColumnContent">
@@ -37,7 +37,7 @@
                         <f:selectItems value="#{ticketsBean.prioridades}" var="priori" itemLabel="#{priori.nombre}" itemValue="#{priori.nombre}" />
                     </p:selectOneMenu>
                 </f:facet>
-                <strong><h:outputText value="#{item.prioridad.nombre}" style="color: #{item.prioridad.color}"/></strong>
+                <h:outputText value="#{item.prioridad.nombre}" style="color: #{item.prioridad.color}"/>
             </p:column>
 
             <p:column filterBy="#{item.estado.nombre}" headerText="Estado" style="color: #{item.estado.color}" styleClass="centeredColumnContent">
@@ -47,7 +47,7 @@
                         <f:selectItems value="#{ticketsBean.estados}" itemLabel="#{estados.nombre}" var="estados" itemValue="#{estados.nombre}" />
                     </p:selectOneMenu>
                 </f:facet>
-                <strong> <h:outputText value="#{item.estado.nombre}" style="color: #{item.estado.color}"/></strong>
+                <h:outputText value="#{item.estado.nombre}" style="color: #{item.estado.color}"/>
             </p:column>
 
             <p:column headerText="Agente" >
@@ -58,14 +58,14 @@
             </p:column>
 
             <p:column headerText="Fecha Creación" styleClass="centeredColumnContent">
-                <strong><h:outputText value="#{item.creado}"/></strong>
+                <h:outputText value="#{item.creado}"/>
             </p:column>
 
             <f:facet name="footer">
                 <p:commandButton id="createButton" styleClass="botonNuevo" value="Nuevo Ticket" actionListener="#{ticketsBean.prepareCreate}" update=":TicketsCreateForm :growl" oncomplete="PF('TicketsCreateDialog').show()" disabled="#{!ticketsBean.usuarioLogin.usuario}" />
-                <p:commandButton id="editButton" styleClass="botonEditar" value="Escalar Ticket" update=":TicketsEditForm :growl" oncomplete="PF('TicketsEditDialog').show()" disabled="#{ticketsBean.selected.estado.nombre=='Cerrado' or !ticketsBean.usuarioLogin.agente or (empty ticketsBean.selected or empty ticketsBean.items)}" />
-                <p:commandButton id="commentButton" styleClass="botonNaranja" icon="fa fa-search" actionListener="#{ticketsBean.prepareComment}" value="Revisar Ticket" update=":TicketsCommentForm :growl" oncomplete="PF('TicketsCommentDialog').show()" disabled="#{(empty ticketsBean.selected or empty ticketsBean.items)}" />
-                <p:commandButton id="closeButton" styleClass="botonEliminar" value="Cerrar Ticket" update=":TicketsListForm:tickets :growl" disabled="#{ticketsBean.selected.estado.nombre=='Cerrado' or !ticketsBean.usuarioLogin.agente or (empty ticketsBean.selected or empty ticketsBean.items)}" actionListener="#{ticketsBean.close}"/>
+                <p:commandButton id="editButton" styleClass="botonEditar" value="Escalar Ticket" update=":TicketsEditForm :growl" oncomplete="PF('TicketsEditDialog').show()" disabled="#{ticketsBean.selected.estado.nombre=='Cerrado' or !ticketsBean.usuarioLogin.agente or (empty ticketsBean.selected.id or empty ticketsBean.items)}" />
+                <p:commandButton id="commentButton" styleClass="botonNaranja" icon="fa fa-tag" actionListener="#{ticketsBean.prepareComment}" value="Revisar Ticket" update=":TicketsCommentForm :growl" oncomplete="PF('TicketsCommentDialog').show()" disabled="#{(empty ticketsBean.selected.id or empty ticketsBean.items)}" />
+                <p:commandButton id="closeButton" styleClass="botonRojo" icon="fa fa-close" value="Cerrar Ticket" update=":TicketsListForm:tickets :growl" disabled="#{ticketsBean.selected.estado.nombre=='Cerrado' or !ticketsBean.usuarioLogin.agente or (empty ticketsBean.selected.id or empty ticketsBean.items)}" actionListener="#{ticketsBean.close}"/>
 
             </f:facet>
 

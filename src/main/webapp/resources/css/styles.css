@@ -269,7 +269,7 @@ body{
     margin: 0 5px;
 }
 .botonEditar, .botonEliminar, .botonCancelar, .botonNuevo, .botonBuscar, .botonCheck,
-.botonRenovar, .botonNaranja, .botonCafe, .botonDetalle, .botonImprimir, .botonSincronizar, .botonExcel{	
+.botonRenovar, .botonNaranja, .botonRojo, .botonCafe, .botonDetalle, .botonImprimir, .botonSincronizar, .botonExcel{	
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     color: #fff !important;
     cursor: pointer;
@@ -368,6 +368,16 @@ body{
     -moz-border-radius: 5px 5px 0 0 !important;
     border-radius: 5px 5px 0 0 !important;
 }
+
+.botonRojo{
+    background-image: none !important;
+     background-color:#d41e24 !important;
+    margin: 10px 5px -4px;
+    -webkit-border-radius: 5px 5px 0 0 !important;
+    -moz-border-radius: 5px 5px 0 0 !important;
+    border-radius: 5px 5px 0 0 !important;
+}
+
 .labelTitulo{
     /*border: 2px solid #43A1DA;*/
     border: 2px solid #0D4D7D;
@@ -1168,21 +1178,11 @@ textarea, input[type="text"], input[type="password"], select{
 
 td.centeredColumnContent{
     text-align: center;
+    font-weight: bold;
 }
 
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
-.ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
-.ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
-.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
-    background: none !important;
-    border: 0 none !important;
-}
-
-.ui-panelgrid td {
-    border:0 !important;
+.foo td {
+    vertical-align: top;
 }
 
 

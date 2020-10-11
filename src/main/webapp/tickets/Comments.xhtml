@@ -16,11 +16,11 @@
                 }
             }
         </script>
-        <h:form class="formColumna" id="TicketsCommentForm">
+        <h:form class="formColumna" id="TicketsCommentForm" >
             <h:panelGroup id="display">
-                <p:panelGrid columns="2" >
-                    <p:panelGrid columns="1" >
-                        <p:panelGrid columns="2" rendered="#{ticketsBean.selected != null}" styleClass="ui-panelgrid-blank">
+                <h:panelGrid columns="2" styleClass="foo" >
+                    <h:panelGrid columns="1" >
+                        <h:panelGrid columns="2" rendered="#{ticketsBean.selected != null}" styleClass="ui-panelgrid-blank">
                             <h:outputLabel value="Usuario: " for="user" />
                             <h:inputText id="user" value="#{ticketsBean.selected.usuario.username}" disabled="true"  />
                             <h:outputLabel value="Prioridad: " for="prioridad" />
@@ -31,32 +31,34 @@
                             <h:inputText id="agente" value="#{ticketsBean.selected.agente.username}" disabled="true" />
                             <h:outputLabel value="Creado: " for="creado" />
                             <h:inputText id="creado" value="#{ticketsBean.selected.creado}" disabled="true" />
-                        </p:panelGrid>
-                        <p:panelGrid columns="1" styleClass="noBorders">
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" style="height: 100%;">
                             <h:outputLabel value="Asunto: " for="asunto" />
                             <h:inputText id="asunto" value="#{ticketsBean.selected.asunto}" disabled="true" />
                             <h:outputLabel value="Descripción: " for="desc" />
-                            <h:inputTextarea id="desc" value="#{ticketsBean.selected.descripcion}" disabled="true" />
-                        </p:panelGrid>
-                    </p:panelGrid>
-                    <p:panelGrid columns="1" rendered="#{ticketsBean.selected.estado.nombre!='Cerrado'}" style="width:100%;">
-
-                        <h:outputLabel value="Ingresar Comentario" for="comentario" />
-                        <h:inputTextarea id="comentario" value="#{ticketsBean.comentario}" required="true" style="width:100%;" />
-                        <p:commandButton styleClass="botonAzul" actionListener="#{ticketsBean.saveComment}" value="Enviar" update="display,:TicketsCommentForm:comments,:growl" oncomplete="handleSubmitComment(xhr,status,args)" />
+                            <h:inputTextarea id="desc" value="#{ticketsBean.selected.descripcion}" disabled="true" style="height: 100%" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1"  style="width:100%;">
+                        <h:panelGroup rendered="#{ticketsBean.selected.estado.nombre!='Cerrado'}">
+                            <h:panelGrid columns="1" style="width:100%;">
+                                <h:outputLabel value="Ingresar Comentario" for="comentario" />
+                                <h:inputTextarea id="comentario" value="#{ticketsBean.comentario}" required="true" style="width:100% !important;" />
+                                <p:commandButton styleClass="botonAzul" actionListener="#{ticketsBean.saveComment}" value="Enviar" update="display,:TicketsCommentForm:comments,:growl" oncomplete="handleSubmitComment(xhr,status,args)" />
+                            </h:panelGrid>
+                        </h:panelGroup>
 
                         <p:dataTable id="comments" value="#{ticketsBean.comentarios}" var="item"
                                      rowKey="#{item.id}"
                                      paginator="true"
-                                     rows="10"
-                                     rowsPerPageTemplate="10,20,30"
+                                     rows="5"
                                      >
                             <p:column headerText="ID" styleClass="centeredColumnContent">
                                 <h:outputText value="#{item.id}"/>
                             </p:column>
 
                             <p:column headerText="Comentario" styleClass="centeredColumnContent">
-                                <strong><h:outputText value="#{item.comentario}"/></strong>
+                                <h:outputText value="#{item.comentario}"/>
                             </p:column>
 
                             <p:column headerText="Por" styleClass="centeredColumnContent">
@@ -67,16 +69,16 @@
                             </p:column>
 
                             <p:column headerText="Fecha" styleClass="centeredColumnContent">
-                                <strong><h:outputText value="#{item.creado}"/></strong>
+                                <h:outputText value="#{item.creado}"/>
                             </p:column>
 
                         </p:dataTable>
 
 
-                    </p:panelGrid>
+                    </h:panelGrid>
 
 
-                </p:panelGrid>
+                </h:panelGrid>
 
                 <p:commandButton value="Cerrar" immediate="true" onclick="PF('TicketsCommentDialog').hide();"/>
             </h:panelGroup>

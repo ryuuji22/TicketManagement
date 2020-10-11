@@ -23,6 +23,7 @@ import com.fact.servicios.UsuariosService;
 import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -40,7 +41,7 @@ public class TicketsBean extends GenericBean<Cticket> implements Serializable {
 
     @Autowired
     private PrioridadesService prioridadesService;
-    
+
     @Autowired
     private EstadosService estadosService;
 
@@ -89,6 +90,7 @@ public class TicketsBean extends GenericBean<Cticket> implements Serializable {
                                 this.getSelected().setPrioridad(prioridad);
                                 this.getSelected().setCreado(ahora);
                                 cticketService.insertar(this.getSelected());
+                                this.resetValuesCreate();
                                 break;
                             }
                             case ESCALATE: {
@@ -96,6 +98,7 @@ public class TicketsBean extends GenericBean<Cticket> implements Serializable {
                                 this.getSelected().setAgente(agente);
                                 this.getSelected().setEstado(new Estados(3));
                                 cticketService.insertar(this.getSelected());
+                                this.resetValuesCreate();
                                 break;
                             }
                             case COMMENT:
@@ -116,6 +119,7 @@ public class TicketsBean extends GenericBean<Cticket> implements Serializable {
                     this.getSelected().setCompletado(fechaCompletado);
                     this.getSelected().setEstado(new Estados(2));
                     cticketService.insertar(this.getSelected());
+                    this.resetValuesCreate();
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
@@ -196,7 +200,7 @@ public class TicketsBean extends GenericBean<Cticket> implements Serializable {
     }
 
     public List<Estados> getEstados() {
-         if (estados == null) {
+        if (estados == null) {
             estados = estadosService.findAllEstados();
         }
         return estados;
@@ -205,8 +209,6 @@ public class TicketsBean extends GenericBean<Cticket> implements Serializable {
     public void setEstados(List<Estados> estados) {
         this.estados = estados;
     }
-    
-    
 
     public List<Usuarios> getAgentes() {
         if (agentes == null) {
@@ -252,6 +254,8 @@ public class TicketsBean extends GenericBean<Cticket> implements Serializable {
         this.setSelected(null);
         this.setAgenteID(null);
         this.setPrioridadID(null);
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("PF('ticketsTable').clearFilters()");
     }
 
     public void resetValuesComments() {

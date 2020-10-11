@@ -45,6 +45,11 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
                 <prop key="hibernate.hbm2ddl.auto">none</prop>
                 <prop key="use_sql_comments">true</prop>
                 <prop key="default_batch_fetch_size">4</prop>
+                <prop key="schema-generation.database.action">drop-and-create</prop>
+                <prop key="schema-generation.create-source" >script</prop>
+                <prop key="schema-generation.create-script-source" >META-INF/schema.sql</prop>
+                <prop key="sql-load-script-source" >META-INF/data.sql</prop>
+                
             </props>
         </property>
     </bean>
