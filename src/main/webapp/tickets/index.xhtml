@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/general.xhtml">
+        <ui:define name="content">
+            <div class="labelTitulo">
+                <div class="prev"></div>
+                <div class="labelText">Gestión de Tickets</div>
+            </div>
+
+            <ui:include src="List.xhtml"/>
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Escalate.xhtml"/> 
+            <ui:include src="Comments.xhtml"/> 
+        </ui:define>
+    </ui:composition>
+</html>

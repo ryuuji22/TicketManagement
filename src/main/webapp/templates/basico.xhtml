@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+    <h:head>
+        <title><ui:insert name="pageTitle">Sistema de Gestión de Tickets</ui:insert></title>
+        <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+        <ui:insert name="header">
+
+        </ui:insert>
+    </h:head> 
+    <h:body>
+        <div style="text-align: center; background-color: #0d4d7d; padding: 15px;">
+            <span class="tituloBlanco">Sistema de Gestión de Tickets</span>
+        </div>
+        <div align="center">
+            
+        </div>
+        <div class="login">
+            <ui:insert name="content">
+                <h:outputText value="Contenido" />
+            </ui:insert>
+        </div>
+        <!-- Pie -->
+        <ui:include src="/templates/pie.xhtml" />
+        <!-- Fin Pie -->
+
+    </h:body>
+</html>

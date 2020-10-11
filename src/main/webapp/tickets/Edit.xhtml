@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:dialog id="TicketsEditDlg" widgetVar="TicketsEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Gestión de Ticket">
+        <script>
+            function handleSubmitEdit(xhr, status, args) {
+                if (args.validationFailed)
+                {
+                    PF('TicketsEditDialog').show();
+                }
+                else {
+                    PF('TicketsEditDialog').hide();
+                }
+            }
+        </script>
+        <h:form class="formColumna" id="TicketsEditForm">
+
+            <h:panelGroup id="display">
+                <p:panelGrid columns="2" rendered="#{clientesBean.selected != null}">
+
+                    <h:outputLabel value="Descripción" for="desc" />
+                    <h:inputText id="desc" value="#{productosBean.selected.descripcion}" required="true" />
+
+                    <h:outputLabel value="PVP" for="pvp" />
+                    <h:inputText id="pvp" value="#{productosBean.selected.pvp}" converterMessage="Solo valores numéricos." />
+
+                    <h:outputLabel value="Stock" for="stock" />
+                    <h:inputText id="stock" value="#{productosBean.selected.stock}" converterMessage="Solo valores numéricos." />
+
+                </p:panelGrid>
+                <p:commandButton styleClass="botonAzul" actionListener="#{productosBean.save}" value="Guardar" update="display,:TicketsListForm:tickets,:growl" oncomplete="handleSubmitEdit(xhr,status,args)"  />
+                <p:commandButton value="Cancelar" onclick="PF('ProductosEditDialog').hide();"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
+
+</ui:composition>
+

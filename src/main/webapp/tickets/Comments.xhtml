@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:dialog id="TicketsCommentDlg" widgetVar="TicketsCommentDialog" modal="true" resizable="false" appendTo="@(body)" header="Gestión de Ticket">
+        <script>
+            function handleSubmitComment(xhr, status, args) {
+                if (args.validationFailed)
+                {
+                    PF('TicketsCommentDialog').show();
+                }
+            }
+        </script>
+        <h:form class="formColumna" id="TicketsCommentForm">
+            <h:panelGroup id="display">
+                <p:panelGrid columns="2" >
+                    <p:panelGrid columns="1" >
+                        <p:panelGrid columns="2" rendered="#{ticketsBean.selected != null}" styleClass="ui-panelgrid-blank">
+                            <h:outputLabel value="Usuario: " for="user" />
+                            <h:inputText id="user" value="#{ticketsBean.selected.usuario.username}" disabled="true"  />
+                            <h:outputLabel value="Prioridad: " for="prioridad" />
+                            <h:inputText id="prioridad" style="color: #{ticketsBean.selected.prioridad.color}" value="#{ticketsBean.selected.prioridad.nombre}" disabled="true" />
+                            <h:outputLabel value="Estado: " for="estado" />
+                            <h:inputText id="estado" style="color: #{ticketsBean.selected.estado.color}" value="#{ticketsBean.selected.estado.nombre}" disabled="true" />
+                            <h:outputLabel value="Agente Asignado: " for="agente" />
+                            <h:inputText id="agente" value="#{ticketsBean.selected.agente.username}" disabled="true" />
+                            <h:outputLabel value="Creado: " for="creado" />
+                            <h:inputText id="creado" value="#{ticketsBean.selected.creado}" disabled="true" />
+                        </p:panelGrid>
+                        <p:panelGrid columns="1" styleClass="noBorders">
+                            <h:outputLabel value="Asunto: " for="asunto" />
+                            <h:inputText id="asunto" value="#{ticketsBean.selected.asunto}" disabled="true" />
+                            <h:outputLabel value="Descripción: " for="desc" />
+                            <h:inputTextarea id="desc" value="#{ticketsBean.selected.descripcion}" disabled="true" />
+                        </p:panelGrid>
+                    </p:panelGrid>
+                    <p:panelGrid columns="1" rendered="#{ticketsBean.selected.estado.nombre!='Cerrado'}" style="width:100%;">
+
+                        <h:outputLabel value="Ingresar Comentario" for="comentario" />
+                        <h:inputTextarea id="comentario" value="#{ticketsBean.comentario}" required="true" style="width:100%;" />
+                        <p:commandButton styleClass="botonAzul" actionListener="#{ticketsBean.saveComment}" value="Enviar" update="display,:TicketsCommentForm:comments,:growl" oncomplete="handleSubmitComment(xhr,status,args)" />
+
+                        <p:dataTable id="comments" value="#{ticketsBean.comentarios}" var="item"
+                                     rowKey="#{item.id}"
+                                     paginator="true"
+                                     rows="10"
+                                     rowsPerPageTemplate="10,20,30"
+                                     >
+                            <p:column headerText="ID" styleClass="centeredColumnContent">
+                                <h:outputText value="#{item.id}"/>
+                            </p:column>
+
+                            <p:column headerText="Comentario" styleClass="centeredColumnContent">
+                                <strong><h:outputText value="#{item.comentario}"/></strong>
+                            </p:column>
+
+                            <p:column headerText="Por" styleClass="centeredColumnContent">
+                                <p:panelGrid columns="2" styleClass="noBorders">
+                                    <i class="fa fa-user" style="padding-left: 70px;"> </i>
+                                    <h:outputText style="padding-right: 100px;" value="#{item.usuario.username}" />
+                                </p:panelGrid>
+                            </p:column>
+
+                            <p:column headerText="Fecha" styleClass="centeredColumnContent">
+                                <strong><h:outputText value="#{item.creado}"/></strong>
+                            </p:column>
+
+                        </p:dataTable>
+
+
+                    </p:panelGrid>
+
+
+                </p:panelGrid>
+
+                <p:commandButton value="Cerrar" immediate="true" onclick="PF('TicketsCommentDialog').hide();"/>
+            </h:panelGroup>
+        </h:form>
+    </p:dialog>
+</ui:composition>
+

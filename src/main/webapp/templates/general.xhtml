@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p ="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+
+    <h:head>
+        <title><ui:insert name="pageTitle">TICKETS</ui:insert></title>
+        <h:outputStylesheet library="css" name="styles.css"  />
+        <ui:insert name="header">
+
+        </ui:insert>
+    </h:head> 
+    <h:body>
+        <p:growl id="growl" life="3000"/>
+
+        <!-- HEADER -->
+        <ui:include src="/templates/header.xhtml" />
+        <!-- Fin HEADER -->
+        <h:outputScript>
+            function recortarCaracteres(obj, val, cont){
+            var tam = obj.value.length;
+            if(tam >val){
+            var content = obj.value.substring(0, val);
+            obj.value = content;
+            }
+            contador(cont, obj);	
+            }
+
+            function contador(cont, content){
+            cont.innerHTML = "Caracteres: "+content.value.length; 
+            }
+        </h:outputScript>
+        <div class="barra">
+            <h:panelGroup class="barraMenu">
+
+                <h:form id="formGeneral" >
+                    <p:menubar>
+                        <f:facet name="options">
+                            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
+                            <p:commandButton actionListener="#{loginBean.logout}" ajax="false"  value="Logout" icon="fa fa-user" />
+                        </f:facet>
+                    </p:menubar>
+                    
+                </h:form>
+            </h:panelGroup>
+        </div>
+        <div id="contenedor">
+            <!-- Menu -->
+            <div id="menuPrincipal">
+                <ui:include src="/appmenu.xhtml" />
+            </div>
+            <!-- Fin Menu -->
+            <!-- Contenido -->
+            <div id="contenido">
+
+                <ui:insert name="content">
+                    <h:outputText value="Contenido" />
+                </ui:insert>
+            </div>
+            <!-- Fin Contenido -->
+        </div>
+        <!-- Pie -->
+        <ui:include src="/templates/pie.xhtml" />
+        <!-- Fin Pie -->
+
+
+    </h:body>
+</html>

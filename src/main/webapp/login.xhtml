@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Login</title>
+        <link href="/resources/css/styles.css" rel="stylesheet"
+              type="text/css" />
+    </h:head>
+    <h:body   >
+
+        <ui:composition template="/templates/basico.xhtml">
+            <ui:define name="content">
+                <h:panelGroup id="panelLogin" layout="block">
+                    <div style="font-size: 15px; padding-bottom: 10px;">
+                        <strong>LOGIN DE USUARIOS</strong>
+                    </div>
+
+                    <h:form id="login" >
+                        <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" >
+                            <f:event type="preRenderComponent" listener="#{loginBean.preRender}" />
+                            <f:attribute name="error" value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
+                        </p:messages>
+                        <p>
+                            <h:outputLabel for="j_username" value="Username:" />
+
+                            <br></br>
+                            <p:inputText value="#{loginBean.username}"
+                                         id="j_username" required="true" requiredMessage="No se ha ingreado ningun usuario"  label="username" autocomplete="off" />
+                        </p>
+                        <p>
+                            <h:outputLabel for="j_password" value="Password:" />
+
+                            <br></br>
+                            <h:inputSecret value="#{loginBean.password}"
+                                           id="j_password" required="true" requiredMessage="El campo contraseña no puede estar vacio!" label="password" autocomplete="off" />
+                        </p>
+                        <p align="center">
+                            <p:commandButton id="loginButton" value="Ingresar" action="#{loginBean.login}" ajax="false" styleClass="botonAzul" update="messages"/>
+                        </p>
+                    </h:form>
+                </h:panelGroup>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

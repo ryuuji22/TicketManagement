@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:dialog id="TicketsEditDlg" widgetVar="TicketsEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Escalar Ticket">
+        <script>
+            function handleSubmitEdit(xhr, status, args) {
+                if (args.validationFailed)
+                {
+                    PF('TicketsEditDialog').show();
+                }
+                else {
+                    PF('TicketsEditDialog').hide();
+                }
+            }
+        </script>
+        <h:form class="formColumna" id="TicketsEditForm">
+
+            <h:panelGroup id="display">
+                <p:panelGrid columns="2" rendered="#{ticketsBean.selected != null}">
+
+                    <h:outputLabel value="A quien desea escalar: " for="agente" />
+                    <p:selectOneMenu id="agente" value="#{ticketsBean.agenteID}" required="true" 
+                                     widgetVar="agenteVar1" >
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItems value="#{ticketsBean.escalateAgents}" var="agent" itemLabel="#{agent.username}"
+                                       itemValue="#{agent.id}" />
+                    </p:selectOneMenu>
+
+                </p:panelGrid>
+                <p:commandButton styleClass="botonAzul" actionListener="#{ticketsBean.save}" value="Guardar" update="display,:TicketsListForm:tickets,:growl" oncomplete="handleSubmitEdit(xhr,status,args)"  />
+                <p:commandButton value="Cancelar" immediate="true" actionListener="#{ticketsBean.resetValuesEscalate}" onclick="PF('TicketsEditDialog').hide();"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
+
+</ui:composition>
+

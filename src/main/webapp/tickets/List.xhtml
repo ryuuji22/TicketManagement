@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TicketsListForm">
+
+        <p:dataTable id="tickets" value="#{ticketsBean.items}" var="item"
+                     selectionMode="single" selection="#{ticketsBean.selected}"
+                     rowKey="#{item.id}"
+                     paginator="true"
+                     rows="10"
+                     rowsPerPageTemplate="10,20,30"
+                     widgetVar="ticketsTable"
+                     emptyMessage="No se encontraron tickets" 
+                     filteredValue="#{ticketsBean.filteredTickets}"
+                     >
+
+            <p:ajax event="rowUnselect" update="editButton closeButton commentButton"/>
+            <p:ajax event="rowSelect" update="editButton closeButton commentButton"/>
+
+            <p:column headerText="ID" styleClass="centeredColumnContent">
+                <h:outputText value="#{item.id}"/>
+            </p:column>
+
+            <p:column headerText="Asunto" styleClass="centeredColumnContent">
+                <strong><h:outputText value="#{item.asunto}"/></strong>
+            </p:column>
+
+            <p:column filterBy="#{item.prioridad.nombre}" headerText="Prioridad" style="color: #{item.prioridad.color}" styleClass="centeredColumnContent">
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('ticketsTable').filter()"  styleClass="custom-filter">
+                        <f:selectItem itemLabel="Seleccione uno" itemValue="#{null}" noSelectionOption="true" />
+                        <f:selectItems value="#{ticketsBean.prioridades}" var="priori" itemLabel="#{priori.nombre}" itemValue="#{priori.nombre}" />
+                    </p:selectOneMenu>
+                </f:facet>
+                <strong><h:outputText value="#{item.prioridad.nombre}" style="color: #{item.prioridad.color}"/></strong>
+            </p:column>
+
+            <p:column filterBy="#{item.estado.nombre}" headerText="Estado" style="color: #{item.estado.color}" styleClass="centeredColumnContent">
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('ticketsTable').filter()" styleClass="custom-filter">
+                        <f:selectItem itemLabel="Seleccione uno" itemValue="#{null}" noSelectionOption="true" />
+                        <f:selectItems value="#{ticketsBean.estados}" itemLabel="#{estados.nombre}" var="estados" itemValue="#{estados.nombre}" />
+                    </p:selectOneMenu>
+                </f:facet>
+                <strong> <h:outputText value="#{item.estado.nombre}" style="color: #{item.estado.color}"/></strong>
+            </p:column>
+
+            <p:column headerText="Agente" >
+                <p:panelGrid columns="2" styleClass="noBorders">
+                    <i class="fa fa-user" style="padding-left: 70px;"> </i>
+                    <h:outputText style="padding-right: 100px;" value="#{item.agente.username}" />
+                </p:panelGrid>
+            </p:column>
+
+            <p:column headerText="Fecha Creación" styleClass="centeredColumnContent">
+                <strong><h:outputText value="#{item.creado}"/></strong>
+            </p:column>
+
+            <f:facet name="footer">
+                <p:commandButton id="createButton" styleClass="botonNuevo" value="Nuevo Ticket" actionListener="#{ticketsBean.prepareCreate}" update=":TicketsCreateForm :growl" oncomplete="PF('TicketsCreateDialog').show()" disabled="#{!ticketsBean.usuarioLogin.usuario}" />
+                <p:commandButton id="editButton" styleClass="botonEditar" value="Escalar Ticket" update=":TicketsEditForm :growl" oncomplete="PF('TicketsEditDialog').show()" disabled="#{ticketsBean.selected.estado.nombre=='Cerrado' or !ticketsBean.usuarioLogin.agente or (empty ticketsBean.selected or empty ticketsBean.items)}" />
+                <p:commandButton id="commentButton" styleClass="botonNaranja" icon="fa fa-search" actionListener="#{ticketsBean.prepareComment}" value="Revisar Ticket" update=":TicketsCommentForm :growl" oncomplete="PF('TicketsCommentDialog').show()" disabled="#{(empty ticketsBean.selected or empty ticketsBean.items)}" />
+                <p:commandButton id="closeButton" styleClass="botonEliminar" value="Cerrar Ticket" update=":TicketsListForm:tickets :growl" disabled="#{ticketsBean.selected.estado.nombre=='Cerrado' or !ticketsBean.usuarioLogin.agente or (empty ticketsBean.selected or empty ticketsBean.items)}" actionListener="#{ticketsBean.close}"/>
+
+            </f:facet>
+
+        </p:dataTable>
+
+
+    </h:form>
+
+</ui:composition>

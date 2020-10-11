@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:dialog id="TicketsCreateDlg" widgetVar="TicketsCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear Ticket">
+        <script>
+            function handleSubmitCreate(xhr, status, args) {
+                if (args.validationFailed)
+                {
+                    PF('TicketsCreateDialog').show();
+                } else {
+                    PF('TicketsCreateDialog').hide();
+                }
+            }
+        </script>
+        <h:form class="formColumna" id="TicketsCreateForm">
+
+            <h:panelGroup id="display">
+                <p:panelGrid columns="2" rendered="#{ticketsBean.selected != null}">
+
+                    <h:outputLabel value="Asunto" for="asunto" />
+                    <h:inputText id="asunto" value="#{ticketsBean.selected.asunto}" required="true" />
+
+                    <h:outputLabel value="Descripción" for="desc" />
+                    <h:inputTextarea id="desc" value="#{ticketsBean.selected.descripcion}" required="true" />
+
+                    <h:outputLabel value="Prioridad" for="prioridad" />
+                    <p:selectOneMenu id="prioridad" value="#{ticketsBean.prioridadID}" required="true" 
+                                     widgetVar="prioridadVar1" >
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItems value="#{ticketsBean.prioridades}" var="prior" itemLabel="#{prior.nombre}"
+                                       itemValue="#{prior.id}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="Agente" for="agente" />
+                    <p:selectOneMenu id="agente" value="#{ticketsBean.agenteID}" required="true" 
+                                     widgetVar="agenteVar1" >
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItems value="#{ticketsBean.agentes}" var="agent" itemLabel="#{agent.username}"
+                                       itemValue="#{agent.id}" />
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <p:commandButton styleClass="botonAzul" actionListener="#{ticketsBean.saveNew}" value="Crear" update="display,:TicketsListForm:tickets,:growl" oncomplete="handleSubmitCreate(xhr,status,args)" />
+                <p:commandButton value="Cancelar" actionListener="#{ticketsBean.resetValuesCreate}" immediate="true" onclick="PF('TicketsCreateDialog').hide();"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
+
+</ui:composition>
+
