@@ -9,7 +9,7 @@ Sistema de Gestión de Tickets
 1. Se debe crear la base de datos, el nombre es indistinto, luego ejecutar sobre dicha base los archivos /src/main/resources/META-INF/schema.sql para crear las tablas y /src/main/resources/META-INF/data.sql
   para popular las tablas, esto es necesario ya que el sistema tiene un control de acceso con usuarios que están previamente registrados.
 2. En el servidor Web, crear un JNDI con el nombre jdbc/ticket el cual debe conectarse a la base de datos.
-3. Abrir el proyecto en netbeans o eclipse y realizar el despliegue. También se puede desplegar directamente el archivo WAR que se encuentra en la carpeta TARGET.
+3. Abrir el proyecto en netbeans o eclipse y realizar el despliegue. También se puede desplegar directamente el archivo WAR que se encuentra en la raiz del proyecto.
 
 ## Descripción
 El sistema permite CREAR, ESCALAR, ATENDER Y CERRAR Tickets de soporte.
