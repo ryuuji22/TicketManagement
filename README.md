@@ -3,7 +3,9 @@ Sistema de Gestión de Tickets
 
 ## Para realizar el deploy del sistema necesita:
 - PostgreSQL 12
+- JAVA EE 7 WEB
 - Servidor Web JEE (Se deployó en Payara Server)
+- IDE: Apache Netbeans 12
 
 ## Pasos para realizar el despligue:
 1. Se debe crear la base de datos, el nombre es indistinto, luego ejecutar sobre dicha base los archivos /src/main/resources/META-INF/schema.sql para crear las tablas y /src/main/resources/META-INF/data.sql
